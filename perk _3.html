@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<!-- saved from url=(0018)https://veins.dev/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="icon" href="https://veins.dev/src/images/favicon.png" type="image/x-icon">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rhys :3</title>
+    <link rel="stylesheet" href="./perk _3_files/index.css">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: #000;
+        }
+
+        #cursor-effect {
+            position: absolute;
+            pointer-events: none;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .cursor-effect {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: url('./src/images/effect.png') no-repeat center center;
+            background-size: cover;
+            opacity: 0.8;
+            pointer-events: none;
+            transform: translate(-50%, -50%)
+            animation: moveEffect linear;
+        }
+
+        @keyframes moveEffect {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) translateY(20px);
+            }
+        }
+
+        .typewriter {
+            font-family: monospace;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: none;
+            animation: typing 4s steps(30, end);
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        #background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div id="enter-site">
+        <button id="enter-button">&gt;click to view&lt;</button>
+    </div>
+    <div id="content" style="display:none;">
+        <audio id="background-music" loop="">
+            <source src="youtube_mzB1VGEGcSU_audio.mp3" type="audio/mpeg">
+        </audio>
+        <video id="background-video" loop="" muted="" playsinline="">
+            <source src="youtube_mzB1VGEGcSU_1280x720_h264.mp4" type="video/mp4">
+        </video>
+        <div id="video-overlay"></div>
+        <div id="bio-link">
+            <div id="user-profile">
+                <img src="perk _3_files\1261733744713138197 (2).png" alt="Profile Picture">
+                <h2>rhys</h2>
+                <p id="typewriter" class="typewriter">commiting genocide</p>
+                <div id="buttons">
+                    <a href="https://www.instagram.com/z0natas/">insta</a>
+                    <a href="https://tiktok.com/@ill.boyfriend">tiktok</a>
+                    <a href="https://cash.app/$zonara">cashapp</a>
+                    <a href="https://x.com/z0natas">twitter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="cursor-effect"><div class="cursor-effect" style="left: 902px; top: 39px; animation-duration: 1.64183s; animation-delay: 0s;"></div><div class="cursor-effect" style="left: 902px; top: 39px; animation-duration: 2.16418s; animation-delay: -0.2s;"></div><div class="cursor-effect" style="left: 902px; top: 39px; animation-duration: 2.08776s; animation-delay: -0.4s;"></div><div class="cursor-effect" style="left: 902px; top: 39px; animation-duration: 1.28696s; animation-delay: -0.6s;"></div><div class="cursor-effect" style="left: 902px; top: 39px; animation-duration: 1.21939s; animation-delay: -0.8s;"></div></div>
+    <script src="./perk _3_files/jquery-3.6.0.min.js.download"></script>
+    <script>
+        $(document).ready(function() {
+            var audio = $('#background-music')[0];
+            var video = $('#background-video')[0];
+
+            $('#enter-button').click(function() {
+                $('#enter-site').fadeOut('slow', function() {
+                    $('#content').fadeIn('slow', function() {
+                        const playMedia = () => {
+                            audio.play().catch(error => console.error("Error playing audio:", error));
+                            video.play().catch(error => console.error("Error playing video:", error));
+                        };
+
+                        video.addEventListener('canplay', playMedia);
+                        audio.addEventListener('canplay', playMedia);
+
+                        audio.load();
+                        video.load();
+                    });
+                });
+            });
+
+            audio.onended = function() {
+                audio.currentTime = 0; 
+                audio.play(); 
+            };
+
+            video.onended = function() {
+                video.currentTime = 0;
+                video.play(); 
+            };
+
+            document.addEventListener('mousemove', (event) => {
+                const cursorEffectContainer = document.getElementById('cursor-effect');
+
+                cursorEffectContainer.innerHTML = '';
+
+                const numEffects = 5;
+                const effectSize = 5;
+                const spacing = 2;
+
+                for (let i = 0; i < numEffects; i++) {
+                    const effect = document.createElement('div');
+                    effect.className = 'cursor-effect';
+
+                    effect.style.left = `${event.clientX}px`;
+                    effect.style.top = `${event.clientY}px`;
+
+                    effect.style.animationDuration = `${Math.random() * 2 + 1}s`;
+                    effect.style.animationDelay = `${-i * spacing / 10}s`;
+
+                    cursorEffectContainer.appendChild(effect);
+
+                    effect.addEventListener('animationend', () => {
+                        effect.remove();
+                    });
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                    e.preventDefault();
+                }
+            });
+
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+            });
+
+            document.addEventListener('visibilitychange', function() {
+                if (document.visibilityState === 'visible') {
+                    if (video.paused) {
+                        video.play();
+                    }
+                    if (audio.paused) {
+                        audio.play();
+                    }
+                } else {
+                    video.pause();
+                    audio.pause();
+                }
+            });
+
+            const texts = [
+                "5/6/2009",
+                "juice wrld's better",
+                "dulce <3",
+                "Playing Minecraft since 2014",
+                "i'm taking you with me.",
+                "coded by perk"
+            ];
+
+            let index = 0;
+            let textElement = document.getElementById('typewriter');
+            let currentText = '';
+            let isDeleting = false;
+            let charIndex = 0;
+
+            function type() {
+                if (index >= texts.length) {
+                    index = 0;
+                }
+
+                const text = texts[index];
+
+                if (isDeleting) {
+                    currentText = text.substring(0, charIndex--);
+                } else {
+                    currentText = text.substring(0, charIndex++);
+                }
+
+                textElement.textContent = currentText;
+
+                if (!isDeleting && charIndex === text.length) {
+                    setTimeout(() => isDeleting = true, 2000);
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    index = (index + 1) % texts.length;
+                    setTimeout(type, 500);
+                }
+
+                setTimeout(type, isDeleting ? 100 : 150);
+            }
+
+            type();
+
+            const titleText = ["rhys :3", "rhys >"];
+            let titleIndex = 0;
+            function typeTitle() {
+                if (titleIndex <= titleText.length) {
+                    document.title = titleText.substring(0, titleIndex++);
+                    setTimeout(typeTitle, 150);
+                }
+            }
+            typeTitle();
+        });
+    </script>
+
+</body></html>
